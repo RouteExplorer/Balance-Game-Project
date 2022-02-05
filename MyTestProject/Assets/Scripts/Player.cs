@@ -5,30 +5,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 
 {
-    public Rigidbody rb;
-    public float horizontalInput;
-    public float verticalInput;
-    public float speed = 6f;
+    public Rigidbody rb; // instantiates the balls physics property
+    public float horizontalInput; //
+    public float verticalInput; // 
+    public float speed = 6f; // sets ball speed
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>(); // initailies the ball first
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //updates every frame
     private void FixedUpdate()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        //rb.AddForce(Vector3.right);
-        Vector3 movement = new Vector3(horizontalInput, 0.0f, verticalInput);
-        rb.AddForce(movement * speed);
+        horizontalInput = Input.GetAxis("Horizontal"); // takes the horizontal input
+        verticalInput = Input.GetAxis("Vertical"); // takes the vertical input into the function
 
-        //rb.AddForce(new Vector3(horizontalInput, 0.0f, verticalInput) * speed);
+        Vector3 movement = new Vector3(horizontalInput, 0.0f, verticalInput); // creates a new function of the horizontal and vertical position movement
+        rb.AddForce(movement * speed); // force is added to the ball at each coodinate and multipled by the speed to add the movement
+
     }
 }
