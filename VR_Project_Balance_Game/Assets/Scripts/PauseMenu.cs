@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,14 +12,32 @@ public class PauseMenu : MonoBehaviour
     public Text LengthText;
     public Text WidthText;
 
-    private void Update()
+    [SerializeField] private InputActionReference pauseActionReference;
+    public GameObject menu;
+
+    
+
+
+    private void Start()
     {
-        //if button press then check reverse the state of the canvas (if false make it true)
-
-        
-        //pauseMenu.SetActive(false);
+        pauseActionReference.action.performed += OnPause;
     }
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        menu.SetActive(!menu.activeSelf);
 
+        Vector3 vHeadPos = Camera.main.transform.position;
+        Vector3 vGazeDir = Camera.main.transform.forward;
+        menu.transform.position = (vHeadPos + vGazeDir * 3.0f) + new Vector3(0.0f, -.40f, 0.0f);
+        Vector3 vRot = Camera.main.transform.eulerAngles; vRot.z = 0;
+        menu.transform.eulerAngles = vRot;
+
+    }
+    public void SaveExit()
+    {
+        MenuScript.SaveScene = SceneManager.GetActiveScene().buildIndex;
+
+    }
     public void showLength(float value) 
     {
         LengthText.text = Mathf.Round((value/2) * 100f) / 100f + "m";

@@ -4,28 +4,33 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+
 public class CharacterMovementHelper : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    public static Vector3 plankSize;
+
+    public GameObject plank;
 
     private XROrigin xROrigin;
    
     private CharacterController characterController;
     private CharacterControllerDriver driver;
 
+    
+
     void Start()
     {
         xROrigin = GetComponent<XROrigin>();
         characterController = GetComponent<CharacterController>();
         driver = GetComponent<CharacterControllerDriver>();
+        plank.transform.localScale = plankSize;
+        
     }
-
-    // Update is called once per frame
     void Update()
     {
         UpdateCharacterController();
-
-
     }
 
     /// <summary>
@@ -48,4 +53,6 @@ public class CharacterMovementHelper : MonoBehaviour
       
 
     }
+
+
 }

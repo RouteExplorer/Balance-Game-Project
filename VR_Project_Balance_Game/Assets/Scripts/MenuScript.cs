@@ -35,18 +35,24 @@ public class MenuScript : MonoBehaviour
 
         string json = JsonUtility.ToJson(saveData);
 
-        File.WriteAllText(Application.dataPath + "Saves/save.txt", json);
-
-        SceneManager.LoadScene(0);
-
-        //SaveObject loadedSaveObject = JsonUtility.FromJson<SaveObject>(json);
-
-
+        File.WriteAllText(Application.dataPath + "/Saves/save.txt", json);
     }
     public void Load()
     {
-        //get scene
-        //get length and width
+
+        string save = File.ReadAllText(Application.dataPath + "/Saves/save.txt");
+        SaveObject loaded = JsonUtility.FromJson<SaveObject>(save);
+
+        Debug.Log(loaded.currentScene);
+        Debug.Log(loaded.plankSize);
+
+        CharacterMovementHelper.plankSize = loaded.plankSize;
+        SceneManager.LoadScene(loaded.currentScene);
+        
+
+
+
+
     }
     private class SaveObject
     {
